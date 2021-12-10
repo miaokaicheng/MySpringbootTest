@@ -61,7 +61,6 @@ spring:
         # 连接池中的最小空闲连接
         min-idle: 0
 
-# 打印sql日志
 logging:
   level:
     root: info

@@ -8,10 +8,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mm.demo</groupId>
-    <artifactId>MavenTest</artifactId>
+    <artifactId>MySpringbootTest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MavenTest</name>
-    <description>MavenTest</description>
+    <name>MySpringbootTest</name>
+    <description>MySpringbootTest</description>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <properties>

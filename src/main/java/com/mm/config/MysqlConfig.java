@@ -20,6 +20,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * @Description: Mysql数据源配
@@ -47,19 +48,30 @@ public class MysqlConfig {
     @Value("${spring.datasource.druid.mysql.driver-class-name}")
     private String driverClass;
 
+    @Value("${spring.datasource.druid.mysql.filters}")
+    private String filters;
+
     /**
-     * 默认数据源
+     * 默认数据源(如果都扫描到Mapper了，则使用@Primary的数据源)
      *
      * @return
      */
     @Bean(name = "mysqlDataSource")
-    //@Primary
+    @Primary
     public DataSource mysqlDataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(driverClass);
         dataSource.setUrl(url);
         dataSource.setUsername(user);
         dataSource.setPassword(password);
+        /**
+         * 这个是用来配置 druid 监控sql语句的 非常有用 如果你有两个数据源 这个配置哪个数据源就监控哪个数据源的sql 同时配置那就都监控
+         */
+        try {
+            dataSource.setFilters(filters);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return dataSource;
     }
 
@@ -71,7 +83,7 @@ public class MysqlConfig {
     }
 
     @Bean
-    // @Primary
+    @Primary
     public SqlSessionFactory mysqlSqlSessionFactory(@Qualifier("mysqlDataSource") DataSource mysqlDataSource)
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();

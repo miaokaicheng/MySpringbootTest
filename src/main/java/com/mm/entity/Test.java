@@ -9,7 +9,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author Administrator
+ * 数据库表对应类测试
+ * @author MKC
  */
 @Data
 @TableName("t_test")

@@ -22,7 +22,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * @Description: MybatisGpConfig
+ * @Description: PostgreSQL数据源配
  * @author: MKC
  * @date: 2021-12-06 17:57
  */

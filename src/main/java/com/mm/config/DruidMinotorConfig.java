@@ -16,6 +16,7 @@ import java.util.Map;
  *
  * @author MKC
  */
+@SuppressWarnings("unchecked")
 @Configuration
 public class DruidMinotorConfig {
     /**

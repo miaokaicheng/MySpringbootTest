@@ -2,6 +2,7 @@ package com.mm.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mm.entity.MyConstants;
 import com.mm.entity.Test;
 import com.mm.mapper.mysql.DatabaseMysqlMapper;
 import com.mm.mapper.oracle.DatabaseOracleMapper;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @author: MKC
  * @date: 2021-12-07 16:14
  */
+@SuppressWarnings("unchecked")
 @Slf4j
 @Service
 public class DatabaseTestServiceImpl implements DatabaseTestService {
@@ -33,6 +35,11 @@ public class DatabaseTestServiceImpl implements DatabaseTestService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    /**
+     * 分页获取Mysql数据
+     * @param page 分页入参
+     * @return 分页数据
+     */
     @Override
     public List<Test> getMysqlPageList(Page<Test> page) {
         IPage<Test> testIPage = databaseMysqlMapper.getPageList(page);
@@ -44,19 +51,28 @@ public class DatabaseTestServiceImpl implements DatabaseTestService {
         return list;
     }
 
+    /**
+     * 获取Mysql全量数据
+     * @return 全量数据
+     */
     @Override
     public List<Map<String, Object>> getMysql() {
         List<Map<String, Object>> list;
-        if(redisTemplate.hasKey("mysql:list")){
-            list = redisTemplate.opsForList().range("mysql:list", 0, -1);
+        if(redisTemplate.hasKey(MyConstants.REDIS_MYSQL_LIST)){
+            list = redisTemplate.opsForList().range(MyConstants.REDIS_MYSQL_LIST, 0, -1);
         }else{
             list = databaseMysqlMapper.getList();
-            list.forEach(m -> redisTemplate.opsForList().rightPush("mysql:list", m));
+            list.forEach(m -> redisTemplate.opsForList().rightPush(MyConstants.REDIS_MYSQL_LIST, m));
         }
         list.forEach(System.out::println);
         return list;
     }
 
+    /**
+     * 分页获取Oracle数据
+     * @param page 分页入参
+     * @return 分页数据
+     */
     @Override
     public List<Test> getOraclePageList(Page<Test> page) {
         IPage<Test> testIPage = databaseOracleMapper.getPageList(page);
@@ -68,19 +84,28 @@ public class DatabaseTestServiceImpl implements DatabaseTestService {
         return list;
     }
 
+    /**
+     * 获取Oracle全量数据
+     * @return 全量数据
+     */
     @Override
     public List<Map<String, Object>> getOracle() {
         List<Map<String, Object>> list;
-        if(redisTemplate.hasKey("oracle:list")){
-            list = redisTemplate.opsForList().range("oracle:list", 0, -1);
+        if(redisTemplate.hasKey(MyConstants.REDIS_ORACLE_LIST)){
+            list = redisTemplate.opsForList().range(MyConstants.REDIS_ORACLE_LIST, 0, -1);
         }else{
             list = databaseOracleMapper.getList();
-            list.forEach(m -> redisTemplate.opsForList().rightPush("oracle:list", m));
+            list.forEach(m -> redisTemplate.opsForList().rightPush(MyConstants.REDIS_ORACLE_LIST, m));
         }
         list.forEach(System.out::println);
         return list;
     }
 
+    /**
+     * 分页获取Postgres数据
+     * @param page 分页入参
+     * @return 分页数据
+     */
     @Override
     public List<Test> getPostgresPageList(Page<Test> page) {
         IPage<Test> testIPage = databasePostgresMapper.getPageList(page);
@@ -92,19 +117,28 @@ public class DatabaseTestServiceImpl implements DatabaseTestService {
         return list;
     }
 
+    /**
+     * 获取Postgres全量数据
+     * @return 全量数据
+     */
     @Override
     public List<Map<String, Object>> getPostgres() {
         List<Map<String, Object>> list;
-        if(redisTemplate.hasKey("postgres:list")){
-            list = redisTemplate.opsForList().range("postgres:list", 0, -1);
+        if(redisTemplate.hasKey(MyConstants.REDIS_POSTGRES_LIST)){
+            list = redisTemplate.opsForList().range(MyConstants.REDIS_POSTGRES_LIST, 0, -1);
         }else{
             list = databasePostgresMapper.getList();
-            list.forEach(m -> redisTemplate.opsForList().rightPush("postgres:list", m));
+            list.forEach(m -> redisTemplate.opsForList().rightPush(MyConstants.REDIS_POSTGRES_LIST, m));
         }
         list.forEach(System.out::println);
         return list;
     }
 
+    /**
+     * 获取Greenplum全量数据
+     * Greenplum是基于Postgres的，因为公司有用到所以就集成了一下，本地没装这个数据库，不做实现了，原理都一样
+     * @return 全量数据
+     */
     @Override
     public List<Map<String, Object>> getGreenplum() {
         return null;

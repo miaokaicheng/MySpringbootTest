@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mm.mapper.mysql.DatabaseMysqlMapper">
 
+    <!-- IPage分页获取Mysql数据 -->
     <select id="getPageList" resultType="com.mm.entity.Test">
         select tt.id,tt.name,tt.type,tt.num,tt.content,tt.mark from t_test tt
     </select>

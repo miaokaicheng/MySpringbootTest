@@ -5,8 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- *返回结果类统一封装
- * @author Administrator
+ * 返回结果类统一封装
+ * @author MKC
  */
 @Data
 public class ResultInfo implements Serializable {
@@ -23,8 +23,6 @@ public class ResultInfo implements Serializable {
      * 数据对象
      */
     private Object result;
-
-    private Integer total;
 
     /**
      * 无参构造器
@@ -46,10 +44,6 @@ public class ResultInfo implements Serializable {
 
     public ResultInfo message(String message) {
         this.message = message;
-        return this;
-    }
-    public ResultInfo total(Integer total) {
-        this.total = total;
         return this;
     }
 

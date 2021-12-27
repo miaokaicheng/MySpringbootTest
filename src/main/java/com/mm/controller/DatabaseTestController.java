@@ -1,6 +1,7 @@
 package com.mm.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mm.annotation.Log;
 import com.mm.dto.ResultInfo;
 import com.mm.dto.Status;
 import com.mm.entity.Test;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: DatabaseTest
+ * @Description: 多数据源测试
  * @author: MKC
  * @date: 2021-12-03 17:31
  */
@@ -25,6 +26,11 @@ public class DatabaseTestController {
     @Autowired
     private DatabaseTestService databaseTestService;
 
+    /**
+     * 分页获取Mysql数据
+     * @return 分页数据
+     */
+    @Log("执行方法：getMysqlPageList")
     @GetMapping(value = "/mysqlPageList")
     public ResultInfo getMysqlPageList() {
         List<Test> list = databaseTestService.getMysqlPageList(new Page<>(1, 2));
@@ -35,11 +41,19 @@ public class DatabaseTestController {
         }
     }
 
+    /**
+     * 获取Mysql全量数据
+     * @return 全量数据
+     */
     @GetMapping(value = "/mysql")
     public List<Map<String,Object>> getMysql() {
         return databaseTestService.getMysql();
     }
 
+    /**
+     * 分页获取Oracle数据
+     * @return 分页数据
+     */
     @GetMapping(value = "/oraclePageList")
     public ResultInfo getOraclePageList() {
         List<Test> list = databaseTestService.getOraclePageList(new Page<>(1, 3));
@@ -50,11 +64,19 @@ public class DatabaseTestController {
         }
     }
 
+    /**
+     * 获取Oracle全量数据
+     * @return 全量数据
+     */
     @GetMapping(value = "/oracle")
     public List<Map<String,Object>> getOracle() {
         return databaseTestService.getOracle();
     }
 
+    /**
+     * 分页获取Postgres数据
+     * @return 分页数据
+     */
     @GetMapping(value = "/postgresPageList")
     public ResultInfo getPostgresPageList() {
         List<Test> list = databaseTestService.getPostgresPageList(new Page<>(1, 4));
@@ -65,11 +87,19 @@ public class DatabaseTestController {
         }
     }
 
+    /**
+     * 获取Postgres全量数据
+     * @return 全量数据
+     */
     @GetMapping(value = "/postgres")
     public List<Map<String,Object>> getPostgres() {
         return databaseTestService.getPostgres();
     }
 
+    /**
+     * 获取Greenplum全量数据
+     * @return 全量数据
+     */
     @GetMapping(value = "/greenplum")
     public List<Map<String,Object>> getGreenplum() {
         return databaseTestService.getGreenplum();

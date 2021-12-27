@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Description: RedisClusterTest
+ * @Description: Redis测试
  * @author: MKC
  * @date: 2021-12-03 17:31
  */
-
+@SuppressWarnings("unchecked")
 @RestController
 @RequestMapping("/redis")
 public class RedisTestController {
@@ -25,8 +25,11 @@ public class RedisTestController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    /**
+     * redis测试
+     */
     @GetMapping(value = "/redis")
-    public void getredis() {
+    public void getRedis() {
         //string
         stringRedisTemplate.opsForValue().set("a:b:1", "stringRedisTemplate test");
         System.out.println(stringRedisTemplate.opsForValue().get("a:b:1"));

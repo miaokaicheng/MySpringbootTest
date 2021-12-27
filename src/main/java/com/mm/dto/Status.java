@@ -2,7 +2,7 @@ package com.mm.dto;
 
 /**
  * 枚举类对象
- * @author Administrator
+ * @author MKC
  */
 public enum Status {
     // 公共

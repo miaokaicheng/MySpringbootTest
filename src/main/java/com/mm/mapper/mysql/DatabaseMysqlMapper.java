@@ -15,6 +15,11 @@ import java.util.Map;
  */
 @Repository
 public interface DatabaseMysqlMapper {
+    /**
+     * 分页获取Mysql数据
+     * @param page 分页入参
+     * @return 分页数据
+     */
     IPage<Test> getPageList(Page page);
 
     List<Map<String, Object>> getList();

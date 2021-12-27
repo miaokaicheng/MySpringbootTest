@@ -1,20 +1,18 @@
 package com.mm.util;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
-import javax.crypto.Cipher;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @Description: RsaUtil
@@ -40,39 +38,40 @@ public class RsaUtil {
         RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
         String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded()));
         String privateKeyString = new String(Base64.encodeBase64(privateKey.getEncoded()));
-        keyMap.put(Integer.valueOf(0), publicKeyString);
-        keyMap.put(Integer.valueOf(1), privateKeyString);
+        keyMap.put(0, publicKeyString);
+        keyMap.put(1, privateKeyString);
     }
 
     public static String encrypt(String str, String publicKey) throws Exception {
-        if (StringUtils.isEmpty(str))
+        if (StringUtils.isEmpty(str)) {
             return str;
+        }
         byte[] decoded = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey)KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(1, pubKey);
-        String outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes("UTF-8")));
-        return outStr;
+        return Base64.encodeBase64String(cipher.doFinal(str.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static String splitEncrypt(String str, String publicKey) throws Exception {
-        if (StringUtils.isEmpty(str))
+        if (StringUtils.isEmpty(str)) {
             return str;
+        }
         byte[] decoded = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey)KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(1, pubKey);
-        byte[] bytes = str.getBytes("utf-8");
-        int inputlen = bytes.length;
+        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+        int inputLength = bytes.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         int offset = 0;
         int i = 0;
-        while (inputlen - offset > 0) {
+        while (inputLength - offset > 0) {
             byte[] cache;
-            if (inputlen - offset > 117) {
+            if (inputLength - offset > 117) {
                 cache = cipher.doFinal(bytes, offset, 117);
             } else {
-                cache = cipher.doFinal(bytes, offset, inputlen - offset);
+                cache = cipher.doFinal(bytes, offset, inputLength - offset);
             }
             out.write(cache, 0, cache.length);
             i++;
@@ -91,28 +90,27 @@ public class RsaUtil {
         RSAPrivateKey priKey = (RSAPrivateKey)KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(2, priKey);
-        String outStr = new String(cipher.doFinal(inputByte));
-        return outStr;
+        return new String(cipher.doFinal(inputByte));
     }
 
     public static String splitDecrypt(String str, String privateKey) throws Exception {
         if (StringUtils.isEmpty(str))
             return str;
-        byte[] bytes = Base64.decodeBase64(str.getBytes("UTF-8"));
+        byte[] bytes = Base64.decodeBase64(str.getBytes(StandardCharsets.UTF_8));
         byte[] decoded = Base64.decodeBase64(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey)KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(2, priKey);
-        int inputlen = bytes.length;
+        int inputLength = bytes.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         int offset = 0;
         int i = 0;
-        while (inputlen - offset > 0) {
+        while (inputLength - offset > 0) {
             byte[] cache;
-            if (inputlen - offset > 128) {
+            if (inputLength - offset > 128) {
                 cache = cipher.doFinal(bytes, offset, 128);
             } else {
-                cache = cipher.doFinal(bytes, offset, inputlen - offset);
+                cache = cipher.doFinal(bytes, offset, inputLength - offset);
             }
             out.write(cache, 0, cache.length);
             i++;
@@ -120,8 +118,7 @@ public class RsaUtil {
         }
         byte[] decryptedData = out.toByteArray();
         out.close();
-        String outStr = new String(decryptedData, "utf-8");
-        return outStr;
+        return new String(decryptedData, StandardCharsets.UTF_8);
     }
 
     public static void main(String[] args) {

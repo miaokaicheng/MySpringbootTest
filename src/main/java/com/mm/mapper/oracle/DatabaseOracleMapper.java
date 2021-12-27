@@ -15,7 +15,16 @@ import java.util.Map;
  */
 @Repository
 public interface DatabaseOracleMapper {
+    /**
+     * 分页获取Oracle数据
+     * @param page 分页入参
+     * @return 分页数据
+     */
     IPage<Test> getPageList(Page<Test> page);
 
+    /**
+     * 获取Oracle全量数据
+     * @return 全量数据
+     */
     List<Map<String, Object>> getList();
 }

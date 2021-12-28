@@ -80,6 +80,18 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  #Springboot 2.6.X的版本使用的是PathPatternMatcher ，而Springfox使用的路径匹配是基于AntPathMatcher
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  #热部署
+  devtools:
+    restart:
+      #设置开启热部署
+      enabled: true
+      #重启目录
+      additional-paths: src/main/java
+      exclude: WEB-INF/**
 logging:
   level:
     root: info

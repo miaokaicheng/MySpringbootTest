@@ -1,5 +1,7 @@
 package com.mm.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -17,6 +19,7 @@ import java.util.Set;
  * @date: 2021-12-03 17:31
  */
 @SuppressWarnings("unchecked")
+@Api(tags = "Redis Controller")
 @RestController
 @RequestMapping("/redis")
 public class RedisTestController {
@@ -28,6 +31,7 @@ public class RedisTestController {
     /**
      * redis测试
      */
+    @ApiOperation(value = "redis测试", notes = "redis测试")
     @GetMapping(value = "/redis")
     public void getRedis() {
         //string

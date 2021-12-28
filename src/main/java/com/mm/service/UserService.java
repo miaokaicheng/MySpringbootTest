@@ -2,6 +2,8 @@ package com.mm.service;
 
 import com.mm.dto.User;
 
+import java.util.List;
+
 /**
  * @Description 用户接口
  * @Author MKC
@@ -13,7 +15,7 @@ public interface UserService {
      * @param id id
      * @return 用户
      */
-    User getUserById(Integer id);
+    User getUserById(Long id);
 
     /**
      * 保存用户
@@ -21,4 +23,24 @@ public interface UserService {
      * @return 成功失败
      */
     int saveUser(User user);
+
+    /**
+     * 获取用户列表
+     * @return 用户列表
+     */
+    List<User> getUserList();
+
+    /**
+     * 删除用户
+     * @param id id
+     * @return 成功失败
+     */
+    int deleteUser(Long id);
+
+    /**
+     * 更新用户
+     * @param user 用户实体
+     * @return 成功失败
+     */
+    int updateUser(User user);
 }

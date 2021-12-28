@@ -6,6 +6,8 @@ import com.mm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description 用户实现类
  * @Author MKC
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
      * @return 用户
      */
     @Override
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         return userMapper.getUserById(id);
     }
 
@@ -35,5 +37,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public int saveUser(User user) {
         return userMapper.saveUser(user);
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @return 用户列表
+     */
+    @Override
+    public List<User> getUserList() {
+        return userMapper.getUserList();
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param id id
+     * @return 成功失败
+     */
+    @Override
+    public int deleteUser(Long id) {
+        return userMapper.deleteUser(id);
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user 用户实体
+     * @return 成功失败
+     */
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
     }
 }

@@ -72,6 +72,18 @@ public class ResultInfo implements Serializable {
     }
 
     /**
+     * 只返回数据对象
+     *
+     * @param code
+     * @param message
+     * @param result
+     */
+    public ResultInfo(Object result) {
+        super();
+        this.result = result;
+    }
+
+    /**
      * 返回全部信息即状态，状态码，消息，数据对象
      *
      * @param code

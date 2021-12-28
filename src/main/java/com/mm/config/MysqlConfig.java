@@ -1,5 +1,7 @@
 package com.mm.config;
 
+import com.alibaba.druid.filter.logging.Slf4jLogFilter;
+import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.SpringBootVFS;
@@ -21,6 +23,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 /**
  * @Description: Mysql数据源配
@@ -38,18 +41,20 @@ public class MysqlConfig {
 
     @Value("${spring.datasource.druid.mysql.url}")
     private String url;
-
     @Value("${spring.datasource.druid.mysql.username}")
     private String user;
-
     @Value("${spring.datasource.druid.mysql.password}")
     private String password;
-
     @Value("${spring.datasource.druid.mysql.driver-class-name}")
     private String driverClass;
-
     @Value("${spring.datasource.druid.mysql.filters}")
     private String filters;
+    @Value("${spring.datasource.druid.mysql.filter-stat-log-slow-sql}")
+    private boolean logSlowSql;
+    @Value("${spring.datasource.druid.mysql.filter-stat-merge-sql}")
+    private boolean mergeSql;
+    @Value("${spring.datasource.druid.mysql.filter-stat-slow-sql-millis}")
+    private long slowSqlMillis;
 
     /**
      * 默认数据源(如果都扫描到Mapper了，则使用@Primary的数据源)
@@ -72,6 +77,7 @@ public class MysqlConfig {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        dataSource.setProxyFilters(Arrays.asList(statFilter(),logFilter()));
         return dataSource;
     }
 
@@ -106,5 +112,36 @@ public class MysqlConfig {
         configuration.addInterceptor(interceptor);
         sessionFactory.setConfiguration(configuration);
         return sessionFactory.getObject();
+    }
+
+    /**
+     * 慢SQL配置
+     * @return StatFilter
+     */
+    @Bean
+    @Primary
+    public StatFilter statFilter(){
+        StatFilter statFilter = new StatFilter();
+        statFilter.setSlowSqlMillis(slowSqlMillis);
+        statFilter.setLogSlowSql(logSlowSql);
+        statFilter.setMergeSql(mergeSql);
+        return statFilter;
+    }
+
+    /**
+     * 慢SQL日志打印
+     * @return
+     */
+    @Bean
+    public Slf4jLogFilter logFilter(){
+        Slf4jLogFilter filter = new Slf4jLogFilter();
+        /*filter.setResultSetLogEnabled(false);
+        filter.setConnectionLogEnabled(false);
+        filter.setStatementParameterClearLogEnable(false);
+        filter.setStatementCreateAfterLogEnabled(false);
+        filter.setStatementCloseAfterLogEnabled(false);
+        filter.setStatementParameterSetLogEnabled(false);
+        filter.setStatementPrepareAfterLogEnabled(false);*/
+        return  filter;
     }
 }

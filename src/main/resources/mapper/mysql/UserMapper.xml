@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mm.mapper.mysql.UserMapper">
+
+    <!-- 根据id查找用户 -->
+    <select id="getUserById" resultType="com.mm.dto.User">
+        select id,user_name,sex,birthday from t_user where id = #{id}
+    </select>
+
+    <!-- 新增用户 -->
+    <insert id="saveUser">
+        insert into t_user(user_name,sex,birthday) values (#{userName},#{sex},#{birthday})
+    </insert>
+</mapper>

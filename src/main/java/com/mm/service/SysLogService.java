@@ -3,7 +3,7 @@ package com.mm.service;
 import com.mm.dto.SysLog;
 
 /**
- * @Description
+ * @Description 日志类
  * @Author MKC
  * @Date 2021/12/27
  */

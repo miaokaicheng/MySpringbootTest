@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Scope;
 
 /**
  * spring监控
- * TODO 配置了好像也没有生效，有空再看看
  * @author MKC
  */
 @Configuration

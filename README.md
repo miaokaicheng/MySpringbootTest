@@ -19,6 +19,8 @@
 
 ## 2021/12/28
 - 添加Junit测试类,移除原先的TestController那一套
+- 修复Druid的慢SQL，spring监控配置不生效问题
+- 移除无用配置
 
 
 

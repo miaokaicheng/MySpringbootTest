@@ -92,6 +92,23 @@ spring:
       #重启目录
       additional-paths: src/main/java
       exclude: WEB-INF/**
+  #邮件
+  mail:
+    #163 smtp.163.com port: 25
+    #qq smtp.qq.com port: 465
+    #gmail smtp.gmail.com port: 465
+    host: smtp.163.com
+    port: 25
+    username: 邮箱
+    password: 如果是163，这里要填授权码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 logging:
   level:
     root: info

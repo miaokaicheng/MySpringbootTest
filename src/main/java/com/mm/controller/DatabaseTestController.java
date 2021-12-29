@@ -7,11 +7,9 @@ import com.mm.dto.Status;
 import com.mm.entity.Test;
 import com.mm.service.DatabaseTestService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -33,13 +31,22 @@ public class DatabaseTestController {
 
     /**
      * 分页获取Mysql数据
+     *
+     * paramType：表示参数放在哪个地方
+     *     header-->请求参数的获取：@RequestHeader(代码中接收注解)
+     *     query-->请求参数的获取：@RequestParam(代码中接收注解)
+     *     path（用于restful接口）-->请求参数的获取：@PathVariable(代码中接收注解)
+     *     body-->请求参数的获取：@RequestBody(代码中接收注解)
+     *     form（不常用）
+     * PathVariable就是和 paramType = "path" 联合使用的
      * @return 分页数据
      */
     @ApiOperation(value = "分页获取Mysql数据", notes = "分页获取Mysql数据")
-    @ApiImplicitParam(name = "current", value = "当前页数", required = true, dataType = "Long", paramType = "path")
+    //@ApiImplicitParam(name = "current", value = "当前页数", required = true, dataType = "Long", paramType = "path")
     @Log("执行方法：getMysqlPageList")
     @GetMapping(value = "/mysqlPageList")
-    public ResultInfo getMysqlPageList(@PathVariable(value = "current") Long current, @PathVariable(value = "size")  Long size) {
+    //public ResultInfo getMysqlPageList(@PathVariable(value = "current") Long current, @PathVariable(value = "size")  Long size) {
+    public ResultInfo getMysqlPageList( Long current, Long size) {
         List<Test> list = databaseTestService.getMysqlPageList(new Page<>(current, size));
         if (list != null && list.size() > 0) {
             return new ResultInfo(Status.SUCCESS.code, "查询成功", list);

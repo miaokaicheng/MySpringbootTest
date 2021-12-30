@@ -10,8 +10,12 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -21,6 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "用户")
+@Validated
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -92,5 +97,31 @@ public class UserController {
     public @ResponseBody ResultInfo updateUser(@PathVariable(value = "id") Long id, @RequestBody User user) {
         int result = userService.updateUser(user);
         return new ResultInfo(Status.SUCCESS.code, "操作成功");
+    }
+
+    /**
+     * 普通参数校验
+     * @param name 用户名
+     * @param email 邮箱
+     * @return 用户
+     */
+    @ApiOperation(value = "普通参数校验", notes = "普通参数校验")
+    @GetMapping("/{name}/{email}")
+    public ResultInfo getUserByNameAndEmail(
+            @NotBlank(message = "不能为空") @PathVariable(value = "name")  String name,
+            @Email(message = "格式不正确") @PathVariable(value = "email")  String email) {
+        User user = userService.getUserByNameAndEmail(name,email);
+        return new ResultInfo(Status.SUCCESS.code, "查询成功", user);
+    }
+
+    /**
+     * 实体类参数校验
+     * @param user 用户实体类
+     * @return 用户
+     */
+    @ApiOperation(value = "实体类参数校验", notes = "实体类参数校验")
+    @PostMapping("/valid")
+    public ResultInfo getUser(@Valid User user) {
+        return new ResultInfo(Status.SUCCESS.code, "查询成功", user);
     }
 }

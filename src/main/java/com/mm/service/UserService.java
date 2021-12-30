@@ -43,4 +43,12 @@ public interface UserService {
      * @return 成功失败
      */
     int updateUser(User user);
+
+    /**
+     * 根据用户名和邮箱获取用户
+     * @param name 用户名
+     * @param email 邮箱
+     * @return 用户
+     */
+    User getUserByNameAndEmail(String name, String email);
 }

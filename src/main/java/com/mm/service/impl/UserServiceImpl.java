@@ -70,4 +70,16 @@ public class UserServiceImpl implements UserService {
     public int updateUser(User user) {
         return userMapper.updateUser(user);
     }
+
+    /**
+     * 根据用户名和邮箱获取用户
+     *
+     * @param name  用户名
+     * @param email 邮箱
+     * @return 用户
+     */
+    @Override
+    public User getUserByNameAndEmail(String name, String email) {
+        return userMapper.getUserByNameAndEmail(name,email);
+    }
 }

@@ -1,6 +1,7 @@
 package com.mm.mapper.mysql;
 
 import com.mm.dto.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,4 +49,13 @@ public interface UserMapper {
      * @return 成功失败
      */
     int updateUser(User user);
+
+    /**
+     * 根据用户名和邮箱获取用户
+     *
+     * @param name  用户名
+     * @param email 邮箱
+     * @return 用户
+     */
+    User getUserByNameAndEmail(@Param("name") String name, @Param("email") String email);
 }

@@ -108,7 +108,20 @@ spring:
           starttls:
             enable: true
             required: true
-
+  #kafka
+  kafka:
+    #kafka地址
+    bootstrap-servers: localhost:9092
+    #消费者配置
+    consumer:
+      #分组
+      group-id: test-consumer
+      #消息读取策略
+      #earliest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费
+      #latest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+      #none:topic各分区都存在已提交的offset时，从offset后开始消费；只要有一个分区不存在已提交的offset，则抛出异常
+      #exception:直接抛出异常
+      auto-offset-reset: latest
 logging:
   level:
     root: info

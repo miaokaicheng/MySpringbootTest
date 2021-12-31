@@ -19,7 +19,7 @@ import java.util.Set;
  * @date: 2021-12-03 17:31
  */
 @SuppressWarnings("unchecked")
-@Api(tags = "Redis Controller")
+@Api(tags = "Redis")
 @RestController
 @RequestMapping("/redis")
 public class RedisTestController {

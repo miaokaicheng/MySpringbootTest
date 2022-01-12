@@ -122,6 +122,9 @@ spring:
       #none:topic各分区都存在已提交的offset时，从offset后开始消费；只要有一个分区不存在已提交的offset，则抛出异常
       #exception:直接抛出异常
       auto-offset-reset: latest
+  #thymeleaf
+  thymeleaf:
+    cache: false
 logging:
   level:
     root: info

@@ -29,6 +29,8 @@ public class ResultInfo implements Serializable {
      */
     public ResultInfo() {
         super();
+        this.code = Status.SUCCESS.code;
+        this.message = Status.SUCCESS.message;
     }
 
     public ResultInfo(Status status) {
@@ -96,4 +98,21 @@ public class ResultInfo implements Serializable {
         this.message = message;
         this.result = result;
     }
+
+    /**
+     * 正常返回
+     * @return ResultInfo
+     */
+    public static ResultInfo ok(){
+        return new ResultInfo();
+    }
+
+    /**
+     * 异常返回
+     * @return ResultInfo
+     */
+    public static ResultInfo error(String msg){
+        return new ResultInfo(Status.WARN.code,msg);
+    }
+
 }

@@ -34,4 +34,8 @@ public class User {
     @ApiModelProperty(value = "手机号", required = true, example = "18888888888")
     @Pattern(regexp = "^[1][3,5,7,8][0-9]\\d{8}$", message = "手机号码格式错误")
     private String phone;
+    @ApiModelProperty(value = "密码" , example = "密码")
+    private String password;
+    @ApiModelProperty(value = "状态" , example = "1")
+    private String status;
 }

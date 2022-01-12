@@ -14,4 +14,10 @@ public class MyConstants {
     public static final String REDIS_GREENPLUM_LIST = "greenplum:list";
     //====================redis相关end============================//
 
+    //====================用户状态start============================//
+
+    public static final String USER_STATUS_NORMAL = "1";
+    public static final String USER_STATUS_LOCK = "0";
+    public static final String USER_STATUS_DELETE = "-1";
+    //====================用户状态start============================//
 }

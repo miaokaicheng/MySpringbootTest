@@ -65,7 +65,7 @@ public class UserController {
      */
     @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
     @GetMapping("/list")
-    public @ResponseBody ResultInfo getUserList() {
+    public ResultInfo getUserList() {
         List<User> users = userService.getUserList();
         return new ResultInfo(Status.SUCCESS.code, "操作成功", users);
     }
@@ -78,7 +78,7 @@ public class UserController {
     @ApiOperation(value = "删除用户", notes = "根据用户id删除用户")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "Long", paramType = "path")
     @DeleteMapping("/{id}")
-    public @ResponseBody ResultInfo deleteUser(@PathVariable(value = "id") Long id) {
+    public ResultInfo deleteUser(@PathVariable(value = "id") Long id) {
         int result = userService.deleteUser(id);
         return new ResultInfo(Status.SUCCESS.code, "操作成功");
     }
@@ -94,7 +94,7 @@ public class UserController {
             @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "Long", paramType = "path"),
             @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User", paramType = "body") })
     @PutMapping("/{id}")
-    public @ResponseBody ResultInfo updateUser(@PathVariable(value = "id") Long id, @RequestBody User user) {
+    public ResultInfo updateUser(@PathVariable(value = "id") Long id, @RequestBody User user) {
         int result = userService.updateUser(user);
         return new ResultInfo(Status.SUCCESS.code, "操作成功");
     }

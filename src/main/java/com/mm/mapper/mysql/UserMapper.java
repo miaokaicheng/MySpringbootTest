@@ -58,4 +58,11 @@ public interface UserMapper {
      * @return 用户
      */
     User getUserByNameAndEmail(@Param("name") String name, @Param("email") String email);
+
+    /**
+     * 根据用户名获取用户信息
+     * @param userName 用户名
+     * @return 用户
+     */
+    User getUserByName(@Param("userName") String userName);
 }

@@ -4,7 +4,7 @@
 
     <!-- 根据id查找用户 -->
     <select id="getUserById" resultType="com.mm.dto.User">
-        select id,user_name,sex,birthday,email,phone,password,status from t_user where id = #{id}
+        select id,user_name,sex,birthday,email,phone,password,status,create_time from t_user where id = #{id}
     </select>
 
     <!-- 新增用户 -->
@@ -14,7 +14,7 @@
 
     <!-- 获取用户列表 -->
     <select id="getUserList" resultType="com.mm.dto.User">
-        select id,user_name,sex,birthday,email,phone,password,status from t_user
+        select id,user_name,sex,birthday,email,phone,password,status,create_time from t_user
     </select>
 
     <!--删除用户-->
@@ -53,11 +53,30 @@
 
     <!--根据用户名和邮箱获取用户-->
     <select id="getUserByNameAndEmail" resultType="com.mm.dto.User">
-        select id,user_name,sex,birthday,email,phone,password,status from t_user where user_name = #{name} and email = #{email}
+        select id,user_name,sex,birthday,email,phone,password,status,create_time from t_user where user_name = #{name} and email = #{email}
     </select>
     
     <!--根据用户名获取用户信息-->
     <select id="getUserByName" resultType="com.mm.dto.User">
-        select id,user_name,sex,birthday,email,phone,password,status from t_user where user_name = #{userName}
+        select id,user_name,sex,birthday,email,phone,password,status,create_time from t_user where user_name = #{userName}
     </select>
+
+    <!--根据用户ID获取角色列表-->
+    <select id="getRolesByUserId" resultType="com.mm.dto.Role">
+        select r.id,r.name,r.memo from t_role r
+        left join t_user_role ur on(r.id = ur.rid)
+        left join t_user u on(u.id = ur.user_id)
+        where u.id = #{id}
+    </select>
+
+    <!--根据用户ID获取权限列表-->
+    <select id="getPermissionsByUserId" resultType="com.mm.dto.Permission">
+        select p.id,p.url,p.name from t_role r
+        left join t_user_role ur on(r.id = ur.rid)
+        left join t_user u on(u.id = ur.user_id)
+        left join t_role_permission rp on(rp.rid = r.id)
+        left join t_permission p on(p.id = rp.pid )
+        where u.id = #{id}
+    </select>
+
 </mapper>

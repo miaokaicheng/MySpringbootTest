@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  * @Date 2021/12/28
  */
 @Data
-public class User {
+public class User implements Serializable {
     @ApiModelProperty(value = "用户ID" , example = "1")
     private Long id;
     @NotBlank(message = "不能为空")
@@ -38,4 +39,6 @@ public class User {
     private String password;
     @ApiModelProperty(value = "状态" , example = "1")
     private String status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 }

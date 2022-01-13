@@ -1,14 +1,22 @@
 package com.mm.shiro;
 
+import com.mm.dto.Permission;
+import com.mm.dto.Role;
 import com.mm.dto.User;
 import com.mm.entity.MyConstants;
 import com.mm.mapper.mysql.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Description 自定义的Realm类
@@ -25,7 +33,28 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        return null;
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        String userName = user.getUserName();
+        Long userId = user.getId();
+        log.info("用户{}({})获取权限-----ShiroRealm.doGetAuthorizationInfo",userName,userId);
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+        // 获取用户角色集
+        List<Role> roleList = userMapper.getRolesByUserId(userId);
+        Set<String> roleSet = new HashSet<>();
+        for (Role r : roleList) {
+            roleSet.add(r.getName());
+        }
+        simpleAuthorizationInfo.setRoles(roleSet);
+
+        // 获取用户权限集
+        List<Permission> permissionList = userMapper.getPermissionsByUserId(userId);
+        Set<String> permissionSet = new HashSet<>();
+        for (Permission p : permissionList) {
+            permissionSet.add(p.getName());
+        }
+        simpleAuthorizationInfo.setStringPermissions(permissionSet);
+        return simpleAuthorizationInfo;
     }
 
     /**

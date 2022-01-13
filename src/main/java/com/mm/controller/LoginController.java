@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -54,7 +53,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String index(Model model) {
         // 登录成后，即可通过Subject获取登录的用户信息
         User user = (User) SecurityUtils.getSubject().getPrincipal();

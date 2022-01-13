@@ -9,7 +9,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +53,7 @@ public class UserController {
      * @param user 用户
      * @return 成功失败
      */
+    @RequiresPermissions("user:save")
     @ApiOperation(value = "新增用户", notes = "根据用户实体创建用户")
     @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping("/save")
@@ -63,6 +66,7 @@ public class UserController {
      * 获取用户列表
      * @return 用户列表
      */
+    @RequiresPermissions("user:user")
     @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
     @GetMapping("/list")
     public ResultInfo getUserList() {
@@ -75,6 +79,7 @@ public class UserController {
      * @param id id
      * @return 成功失败
      */
+    @RequiresPermissions("user:delete")
     @ApiOperation(value = "删除用户", notes = "根据用户id删除用户")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "Long", paramType = "path")
     @DeleteMapping("/{id}")
@@ -89,6 +94,7 @@ public class UserController {
      * @param user 用户实体
      * @return 成功失败
      */
+    @RequiresPermissions("user:add")
     @ApiOperation(value = "更新用户", notes = "根据用户id更新用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "Long", paramType = "path"),
@@ -117,11 +123,24 @@ public class UserController {
     /**
      * 实体类参数校验
      * @param user 用户实体类
+     * @param bindingResult 升级swagger3之后会报错String无法转换Date的错，需要加这个
      * @return 用户
      */
     @ApiOperation(value = "实体类参数校验", notes = "实体类参数校验")
     @PostMapping("/valid")
-    public ResultInfo getUser(@Valid User user) {
+    public ResultInfo getUser(@Valid User user, BindingResult bindingResult) {
         return new ResultInfo(Status.SUCCESS.code, "查询成功", user);
+    }
+
+    @RequiresPermissions("user:save")
+    @GetMapping("/save")
+    public ResultInfo save() {
+        return new ResultInfo(Status.SUCCESS.code, "操作成功", "有保存权限");
+    }
+
+    @RequiresPermissions("user:delete")
+    @GetMapping("/delete")
+    public ResultInfo delete() {
+        return new ResultInfo(Status.SUCCESS.code, "操作成功", "有删除权限");
     }
 }

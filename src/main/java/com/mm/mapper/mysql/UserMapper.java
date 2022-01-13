@@ -1,5 +1,7 @@
 package com.mm.mapper.mysql;
 
+import com.mm.dto.Permission;
+import com.mm.dto.Role;
 import com.mm.dto.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -65,4 +67,18 @@ public interface UserMapper {
      * @return 用户
      */
     User getUserByName(@Param("userName") String userName);
+
+    /**
+     * 根据用户ID获取角色列表
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    List<Role> getRolesByUserId(@Param("id") Long userId);
+
+    /**
+     * 根据用户ID获取权限列表
+     * @param userId 用户ID
+     * @return 权限列表
+     */
+    List<Permission> getPermissionsByUserId(@Param("id") Long userId);
 }

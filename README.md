@@ -3,7 +3,8 @@
   - 项目根：<http://localhost:8081>
   - druid监控地址：<http://localhost:8081/druid>
     - 账号密码在DruidMinotorConfig中配置的，这里使用了admin
-  - swagger地址：<http://localhost:8081/swagger-ui.html>
+  - swagger地址：<http://localhost:8081/swagger-ui/index.html>
+    - 听说更好看的UI：<http://localhost:8081/doc.htm>
 
 ## 2021/12/10
 - 初始化项目
@@ -42,6 +43,11 @@
 - 整合websocket（没有写前端，直接使用postman测试，如果要写前端，可以引入SockJS库）
 - 整合Shiro
 
+## 2022/01/13
+- 升级swagger到3.0版本（根据 [issue#1](https://github.com/miaokaicheng/MySpringbootTest/issues/1) 问题 2.10.0以下的版本有跨站脚本漏洞,因为是自己学习用的，确实没有注意安全这方面，感谢提醒。同时3.0版本还是有一些变化的，建议看下官方文档）
+- 移除dev和prd分支，因为自己开发学习用的，只留一个管理代码就行
+- shiro中使用redis缓存权限
+- thymeleaf中使用Shiro标签
 
 
 

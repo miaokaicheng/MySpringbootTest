@@ -1,5 +1,7 @@
 server:
   port: 8081
+  session:
+    timeout: 3600
 spring:
   datasource:
     druid:
@@ -124,7 +126,21 @@ spring:
       auto-offset-reset: latest
   #thymeleaf
   thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
     cache: false
+security:
+  basic:
+    enabled: true
+  #这边配置后就不会随机分配了
+  oauth2:
+    client:
+      client-id: test
+      client-secret: test1234
+      #必须指定redirect-uri
+      registered-redirect-uri: https://github.com/miaokaicheng
 logging:
   level:
     root: info

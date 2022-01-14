@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 @Configuration
-public class DruidMinotorConfig {
+public class DruidMonitorConfig {
     /**
      * 配置Druid监控
      * 后台管理Servlet

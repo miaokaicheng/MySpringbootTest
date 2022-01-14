@@ -2,7 +2,7 @@
 ## 地址 
   - 项目根：<http://localhost:8081>
   - druid监控地址：<http://localhost:8081/druid>
-    - 账号密码在DruidMinotorConfig中配置的，这里使用了admin
+    - 账号密码在DruidMonitorConfig中配置的，这里使用了admin
   - swagger地址：<http://localhost:8081/swagger-ui/index.html>
     - 听说更好看的UI：<http://localhost:8081/doc.htm>
 
@@ -49,6 +49,14 @@
 - shiro中使用redis缓存权限
 - thymeleaf中使用Shiro标签
 
-
+## 2022/01/14
+- 整合Spring Security（对比Shiro,Security上手会更复杂一些，但是是Spring的产品，匹配度更好一些）
+- 整合OAuth2(因为用的springboot2.6.0，cloud的OAuth2没有找到对应的版本，使用security的，实现验证码校验和账号密码校验两种模式)
+- - 验证码方式测试步骤：
+- -  - http://localhost:8081/oauth/authorize?response_type=code&client_id=test&redirect_uri=配置的uri&scope=all&state=hello 获取到code
+- -  - http://localhost:8081/oauth/token?grant_type=authorization_code&code=上一步的code&client_id=配置的client_id&redirect_uri=配置的uri&scope=all （需要在header中添加Authorization，值为client_id:client-secret的base64编码）获取token，一个code只能获取一次
+- - 账号密码测试步骤：
+- -  - http://localhost:8081/oauth/token?grant_type=password&username=用户名&password=密码&scope=all （Authorization和验证码方式一样配置）
+- TODO 问题：Full authentication is required to access this resource 待解决
 
 还在学习中，慢慢完善。。。
